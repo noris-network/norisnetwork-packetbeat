@@ -1,5 +1,5 @@
 {
-  "name": "puppet-packetbeat",
+  "name": "norisnetwork-packetbeat",
   "version": "0.1.0",
   "author": "norisnetwork",
   "summary": "This module installs and configures the Packetbeat shipper by Elastic.",
