@@ -2,13 +2,23 @@
   "name": "puppet-packetbeat",
   "version": "0.1.0",
   "author": "norisnetwork",
-  "summary": "This module installs and configures the Packetbeat shipper by Elastic.", 
+  "summary": "This module installs and configures the Packetbeat shipper by Elastic.",
   "license": "Apache-2.0",
   "source": "https://github.com/noris-network/puppet-packetbeat",
+  "issues_url": "https://github.com/noris-network/norisnetwork-packetbeat/issues",
   "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":">= 4.13.0 < 5.0.0"},
-    {"name":"puppetlabs-apt","version_requirement":">= 4.0.0 < 5.0.0"},
-    {"name":"darin-zypprepo","version_requirement":">= 1.0.0 < 2.0.0"}
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 4.13.0 < 5.0.0"
+    },
+    {
+      "name": "puppetlabs-apt",
+      "version_requirement": ">= 4.0.0 < 5.0.0"
+    },
+    {
+      "name": "darin-zypprepo",
+      "version_requirement": ">= 1.0.0 < 2.0.0"
+    }
   ],
   "operatingsystem_support": [
     {
