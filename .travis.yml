@@ -39,12 +39,12 @@ branches:
     - /^v\d/
 notifications:
   email: false
-#deploy:
-#  provider: puppetforge
-#  user: norisnetwork
-#  password:
-#    secure: ""
-#  on:
-#    tags: true
-#    all_branches: true
-#    condition: "$DEPLOY_TO_FORGE = yes"
+deploy:
+  provider: puppetforge
+  user: norisnetwork
+  password:
+    secure: EBDp3lVMYELzu0+SfTPLX7AX2nHW5f9Urv1L6+34aUlfUONhJq3zuiWk1DZLPdPmDM8wlbhDzr4z9YtnBjH2nFzyq6VmKp0LA37tiLJcDIuRIe6Ci7QmH+j2xAaFPne5Doln2/a0I+PyVGGRp0XIQv1yHoGGT0YO8mOZblL3Z1CD9oRTHmXCv86nvr2mOC1vUGKGIjeKhMEql2Hn7IjTfmhRySAFKFNLd7u4UkCHBKqHxgvpiu2E72jO/jJhwbgPJEXYCncG6QSvqDy6hR0wIEm4A+tiGRc7UissjAfaltpoVdcs3AZanrTr7slKD+wM+qY9RlCsNWpAdqAU77xqQLWf9tj0gteBoIkL9D3TOarT1+2Q+f8RmOzPsv+EFq2+0JbVX12vl2gbfuIA3jGcs7Ll+U7RhgXrgz2zjp/fAx6DxO6F2sWluzxs0qjZN+lAZHLyfbniRNrbjr3R9IMsurzp1rh/Ih7mejfDb26NEg3vemjQf4PJWO3UuZc+tXeB1I001L1oddbFyozIQahlOJITGR9UCe7MEY94rcCRob4nr1V8cdEbtimP4wdVs7uinllRihr9lDpv+ytYQLGRUxMm8SLPiFgRa4HI2D6vel9dKqaunBPcRiKn9TZ12/L8nrxOFHNSJkwEuyquOMYTQrMnG6s9kor2CsruzykgIzU=
+  on:
+    tags: true
+    all_branches: true
+    condition: "$DEPLOY_TO_FORGE = yes"
