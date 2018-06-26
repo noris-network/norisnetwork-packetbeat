@@ -1,111 +1,51 @@
-# Class: packetbeat
-# ================
+# Installs and configures packetbeat
 #
-# * `beat_name`: 
-# [String] the name of the shipper (default: the *hostname*).
+# @summary Installs and configures packetbeat
 #
-# * `fields_under_root`: 
-# [Boolean] whether to add the custom fields to the root of the document (default is *false*).
+# @example a basic configuration using eth0 to capture http traffic (ports 80 and 8080) and TLS traffic (port 443)
+#  class{'packetbeat':
+#    interfaces => {
+#      'device' => 'eth0'
+#    },
+#    protocols => {
+#      'http' => {
+#        'ports' => [80, 8080]
+#      },
+#      'tls' => {
+#        'ports' => [443]
+#      },
+#    },
+#    outputs => {
+#      'elasticsearch' => {
+#        'hosts' => ['http://localhost:9200'],
+#        'index' => 'packetbeat-%{+YYYY.MM.dd}',
+#      },
+#    },
+#  }
 #
-# * `queue`: 
-# [Hash] packetbeat's internal queue, before the events publication (default is *4096* events in *memory* with immediate flush).
+# @param beat_name the name of the shipper (defaults the hostname).
+# @param fields_under_root whether to add the custom fields to the root of the document.
+# @param queue packetbeat's internal queue, before the events publication.
+# @param logging the packetbeat's logfile configuration.
+# @param flows the configuration for the monitoring of network flows.
+# @param interfaces interface(s) used to capture the traffic.
+# @param queue_size the internal queue size for single events in the processing pipeline.
+# @param outputs the options of the mandatory "outputs" section of the configuration file.
+# @param major_version the major version of the package to install.
+# @param ensure whether Puppet should manage packetbeat or not.
+# @param service_provider which boot framework to use to manage the service.
+# @param manage_repo whether to configure the Elastic package repo or not.
+# @param service_ensure the status of the packetbeat service.
+# @param package_ensure the package version to install.
+# @param config_file_mode the permissions of the default configuration file.yml (default: 0644).
+# @param disable_configtest whether to check if the configuration file is valid before running the service.
+# @param tags the tags to add to each document.
+# @param fields the fields to add to each document.
+# @param protocols the tansaction protocols to monitor.
+# @param processors the optional processors for events enhancement.
+# @param procs the optional section to monitor the process tracking.
+# @param xpack the configuration of x-pack monitoring.
 #
-# * `logging`: 
-# [Hash] the packetbeat's logfile configuration (default: writes to `/var/log/packetbeat/packetbeat`, 
-# maximum 7 files, rotated when bigger than 10 MB).
-#
-# * `flows`: 
-# [Hash] the configuration for the monitoring of network flows (enabled by default, reporting period 10 seconds, 
-# timeout set to 30 seconds).
-#
-# * `interfaces`: 
-# [Hash] the interface(s) used to capture the traffic (default ist 'any', sniffing mode is 'pcap'). Please read 
-# the [documentation] (https://www.elastic.co/guide/en/beats/packetbeat/current/configuration-interfaces.html) for 
-# the details.
-# 
-# * `queue_size`: 
-# [Integer] the internal queue size for single events in the processing pipeline, applicable only if the major 
-# version is '5' (default: 1000).
-# 
-# * `outputs`: 
-# [Hash] the options of the mandatory [outputs] (https://www.elastic.co/guide/en/beats/packetbeat/current/configuring-output.html) section of the configuration file (default: undef).
-#
-# * `major_version`: 
-# [Enum] the major version of the package to install (default: '6').
-#
-# * `ensure`: 
-# [Enum 'present', 'absent']: whether Puppet should manage `packetbeat` or not (default: 'present').
-#
-# * `service_provider`: 
-# [Enum 'systemd', 'init'] which boot framework to use to install and manage the service (default: 'systemd').
-#
-# ' `manage_repo`:
-# [Boolean] whether to configure the Elastic package repo or not (default: true).
-#
-# * `service_ensure`: 
-# [Enum 'enabled', 'running', 'disabled', 'unmanaged'] the status of the packet service (default 'enabled'). In more details:
-#     * *enabled*: service is running and started at every boot;
-#     * *running*: service is running but not started at boot time;
-#     * *disabled*: service is not running and not started at boot time;
-#     * *unamanged*: Puppet does not manage the service.
-#
-# * `package_ensure`: 
-# [String] the package version to install. It could be 'latest' (for the newest release) or a specific version 
-# number, in the format *x.y.z*, i.e., *6.2.0* (default: latest).
-#
-# * `config_file_mode`: 
-# [String] the octal file mode of the configuration file `/etc/packetbeat/packetbeat.yml` (default: 0644).
-#
-# * `disable_configtest`: 
-# [Boolean] whether to check if the configuration file is valid before attempting to run the 
-# service (default: true).
-#
-# * `tags`: 
-# [Array[Strings]]: the tags to add to each document (default: undef).
-#
-# * `fields`: 
-# [Hash] the fields to add to each document (default: undef).
-#
-# * `protocols`: 
-# [Hash] the tansaction protocols to monitor (default: undef). Please refer to the [documentation] (https://www.elastic.co/guide/en/beats/packetbeat/current/configuration-protocols.html) for the available options.
-#
-# * `modules`: 
-# [Array[Hash]] the required [modules] (https://www.elastic.co/guide/en/beats/packetbeat/current/packetbeat-modules.html) to load (default: undef).
-#
-# * `processors`: 
-# [Array[Hash]] the optional [processors] (https://www.elastic.co/guide/en/beats/packetbeat/current/defining-processors.html) for event enhancement (default: undef).
-#
-# * `procs`:
-# [Hash] the optional section to monitor the [process tracking] (https://www.elastic.co/guide/en/beats/packetbeat/current/configuration-processes.html) (default: undef).
-#
-# * `xpack`:
-# [Hash] the configuration of x-pack monitoring (default: undef).
-#
-# Examplses
-# ================
-#
-# @example
-#
-# class{'packetbeat':
-#     interfaces => {
-#       'device' => 'eth0'
-#     },
-#     protocols => {
-#       'http' => {
-#         'ports' => [80, 8080]
-#       },
-#       'tls' => {
-#         'ports' => [443]
-#       },
-#     },
-#     outputs => {
-#       'elasticsearch' => {
-#         'hosts' => ['http://localhost:9200'],
-#         'index' => 'packetbeat-%{+YYYY.MM.dd}',
-#       },
-#     },
-
-
 class packetbeat (
   String $beat_name                                                   = $::hostname,
   Boolean $fields_under_root                                          = false,
@@ -155,10 +95,10 @@ class packetbeat (
   Boolean $disable_configtest                                         = false,
   Optional[Array[String]] $tags                                       = undef,
   Optional[Hash] $fields                                              = undef,
-  Optional[Hash] $protocols                                           = undef,
+  Optional[Hash] $protocols                                           = {},
   Optional[Array[Hash]] $processors                                   = undef,
-  Optional[Hash] $procs                                               = undef,
-  Optional[Hash] $xpack                                               = undef,
+  Optional[Hash] $procs                                               = {},
+  Optional[Hash] $xpack                                               = {},
 ) {
 
   contain packetbeat::repo
