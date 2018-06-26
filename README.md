@@ -52,6 +52,25 @@ class{'packetbeat':
       },
     },
 ```
+The same example, but using Hiera
+
+```
+classes:
+  include:
+    - 'packetbeat'
+
+packetbeat::interfaces:
+  device: 'eth0'
+packetbeat::protocols:
+  http:
+    ports:
+      - 80
+packetbeat::outputs:
+  elasticsearch:
+    hosts: 
+      - 'http://localhost:9200'
+    index: "packetbeat-%%{}{+YYYY.MM.dd}"
+```
 
 ## Usage
 
@@ -72,12 +91,33 @@ class{'packetbeat':
     outputs => {
       'redis' => {
         'hosts' => ['localhost:6379', 'other_redis:6379'],
-        'index' => 'packetbeat-%{+YYYY.MM.dd}',
+        'key' => 'packetbeat',
       },
     },
 ```
+If using Hiera, the above example would look like
+
+```
+classes:
+  include:
+    - 'packetbeat'
+
+packetbeat::interfaces:
+  device: 'eth0'
+packetbeat::protocols:
+  http:
+    ports:
+      - 80
+packetbeat::outputs:
+  redis:
+    hosts: 
+      - 'localhost:6379'
+      - 'other_redis:6379'
+    key: "packetbeat"
+```
 Add the `packetd` module to the configuration, specifying a rule to detect 32 bit system calls. Output to Elasticsearch.
 Disable flow detection, detect HTTP traffic on port 8080 too and use `af_packet` to capture the traffic. Output to Elasticsearch.
+
 ```puppet
 class{'packetbeat':
     interfaces => {
@@ -98,6 +138,29 @@ class{'packetbeat':
         'index' => 'packetbeat-%{+YYYY.MM.dd}',
       },
     },
+```
+Similarly, in Hiera
+
+```
+classes:
+  include:
+    - 'packetbeat'
+
+packetbeat::interfaces:
+  device: 'eth0'
+  type: 'af_packet'
+packetbeat::flows:
+  enabled: false
+packetbeat::protocols:
+  http:
+    ports:
+      - 80
+      - 8080
+packetbeat::outputs:
+  elasticsearch:
+    hosts: 
+      - 'http://localhost:9200'
+    index: "packetbeat-%%{}{+YYYY.MM.dd}"
 ```
 
 
@@ -173,6 +236,16 @@ This module does not load the index template in Elasticsearch nor the packetbeat
 
 The option `manage_repo` does not work properly on SLES. This means that, even if set to *false*, the repo file 
 `/etc/zypp/repos.d/beats.repo` will be created and the corresponding repo will be enabled.
+
+The module allows to set up the 
+[x-pack section] (https://www.elastic.co/guide/en/beats/packetbeat/current/monitoring.html) 
+of the configuration file, in order to set the internal statistics of packetbeat to an Elasticsearch cluster. 
+In order to do that the parameter `package_ensure` should be set to: 
+* `latest`
+* `6.1.0` or a higher version
+Unfortunately when `package_ensure` is equal to `installed` or `present`, the `x-pack` section is removed, 
+beacuse there is no way to know which version of the package is going to be handled (unless a specific fact is 
+added).
 
 ## Development
 
