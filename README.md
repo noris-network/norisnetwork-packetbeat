@@ -193,7 +193,7 @@ Installation and configuration.
 * `outputs`: [Hash] the options of the mandatory [outputs] (https://www.elastic.co/guide/en/beats/packetbeat/current/configuring-output.html) section of the configuration file (default: undef).
 * `major_version`: [Enum] the major version of the package to install (default: '6').
 * `ensure`: [Enum 'present', 'absent']: whether Puppet should manage `packetbeat` or not (default: 'present').
-* `service_provider`: [Enum 'systemd', 'init'] which boot framework to use to install and manage the service (default: 'systemd').
+* `service_provider`: [Enum 'systemd', 'init', 'debian', 'redhat', 'upstart', undef] which boot framework to use to install and manage the service (default: undef).
 ' `manage_repo`: [Boolean] whether to configure the Elastic package repo or not (default: true).
 * `service_ensure`: [Enum 'enabled', 'running', 'disabled', 'unmanaged'] the status of the packet service (default 'enabled'). In more details:
     * *enabled*: service is running and started at every boot;

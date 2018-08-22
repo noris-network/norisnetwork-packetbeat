@@ -1,6 +1,6 @@
 {
   "name": "norisnetwork-packetbeat",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "norisnetwork",
   "summary": "This module installs and configures the Packetbeat shipper by Elastic.",
   "license": "Apache-2.0",
