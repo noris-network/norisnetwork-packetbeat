@@ -194,7 +194,7 @@ Installation and configuration.
 * `major_version`: [Enum] the major version of the package to install (default: '6').
 * `ensure`: [Enum 'present', 'absent']: whether Puppet should manage `packetbeat` or not (default: 'present').
 * `service_provider`: [Enum 'systemd', 'init', 'debian', 'redhat', 'upstart', undef] which boot framework to use to install and manage the service (default: undef).
-' `manage_repo`: [Boolean] whether to configure the Elastic package repo or not (default: true).
+* `manage_repo`: [Boolean] whether to configure the Elastic package repo or not (default: true).
 * `service_ensure`: [Enum 'enabled', 'running', 'disabled', 'unmanaged'] the status of the packet service (default 'enabled'). In more details:
     * *enabled*: service is running and started at every boot;
     * *running*: service is running but not started at boot time;
@@ -234,8 +234,7 @@ It defines the default values of some parameters.
 
 This module does not load the index template in Elasticsearch nor the packetbeat example dashboards in Kibana. These two tasks should be carried out manually. Please follow the documentation to [manually load the index template in Elasticsearch] (https://www.elastic.co/guide/en/beats/packetbeat/current/packetbeat-template.html#load-template-manually-alternate) and to [import the packetbeat dashboards in Kibana] (https://www.elastic.co/guide/en/beats/devguide/6.2/import-dashboards.html).
 
-The option `manage_repo` does not work properly on SLES. This means that, even if set to *false*, the repo file 
-`/etc/zypp/repos.d/beats.repo` will be created and the corresponding repo will be enabled.
+The option `manage_repo` does not remove the repo repo file, even if set to *false*. Please delete it manually. 
 
 The module allows to set up the 
 [x-pack section] (https://www.elastic.co/guide/en/beats/packetbeat/current/monitoring.html) 
@@ -246,6 +245,7 @@ In order to do that the parameter `package_ensure` should be set to:
 Unfortunately when `package_ensure` is equal to `installed` or `present`, the `x-pack` section is removed, 
 beacuse there is no way to know which version of the package is going to be handled (unless a specific fact is 
 added).
+
 
 ## Development
 
