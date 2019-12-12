@@ -95,7 +95,7 @@ class packetbeat (
   Boolean $disable_configtest                                                         = false,
   Optional[Array[String]] $tags                                                       = undef,
   Optional[Hash] $fields                                                              = undef,
-  Optional[Hash] $protocols                                                           = {},
+  Optional[Variant[Hash, Array, Tuple]] $protocols                                    = [],
   Optional[Array[Hash]] $processors                                                   = undef,
   Optional[Hash] $procs                                                               = {},
   Optional[Hash] $xpack                                                               = {},
