@@ -1,8 +1,8 @@
 {
   "name": "norisnetwork-packetbeat",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "author": "norisnetwork",
-  "summary": "This module installs and configures the Packetbeat shipper by Elastic.",
+  "summary": "Module for installing, managing and cinfiguring the Packetbeat lightweight shipper for network data by elastic.",
   "license": "Apache-2.0",
   "source": "https://github.com/noris-network/norisnetwork-packetbeat",
   "project_page": "https://github.com/noris-network/norisnetwork-packetbeat",
@@ -66,8 +66,11 @@
   "tags": [
     "packetbeat",
     "elasticsearch",
+    "elastic_stack",
+    "elastic",
+    "norisnetwork",
     "logstash",
-    "elastic"
+    "kibana"
   ],
   "pdk-version": "1.15.0",
   "template-url": "pdk-default#1.15.0",
