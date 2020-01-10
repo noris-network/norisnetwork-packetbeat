@@ -85,7 +85,7 @@ class packetbeat (
   Hash $interfaces                                                                    = {},
   Integer $queue_size                                                                 = 1000,
   Hash $outputs                                                                       = {},
-  Enum['5', '6'] $major_version                                                       = '6',
+  Enum['5', '6', '7'] $major_version                                                  = '7',
   Enum['present', 'absent'] $ensure                                                   = 'present',
   Optional[Enum['systemd', 'init', 'debian', 'redhat', 'upstart']] $service_provider  = undef,
   Boolean $manage_repo                                                                = true,
