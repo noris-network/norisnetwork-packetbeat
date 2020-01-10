@@ -32,12 +32,12 @@ describe 'packetbeat', 'type' => 'class' do
           )
         end
       end
-      describe 'with version 6.2.0' do
-        let(:params) { { 'package_ensure' => '6.2.0' } }
+      describe 'with version 7.5.1' do
+        let(:params) { { 'package_ensure' => '7.5.1' } }
 
         it do
           is_expected.to contain_package('packetbeat').with(
-            'ensure' => '6.2.0',
+            'ensure' => '7.5.1',
           )
         end
       end
@@ -77,13 +77,6 @@ describe 'packetbeat', 'type' => 'class' do
           )
         end
       end
-      describe 'with device set to eth0' do
-        let(:params) { { 'interfaces' => { 'device' => 'eth0' } } }
-
-        it do
-          is_expected.to contain_file('/etc/packetbeat/packetbeat.yml').with_content(%r{device: eth0})
-        end
-      end
       case os
       when %r{centos-7-|redhat-7-}
         describe 'with manage_repo true on RedHat family' do
@@ -92,7 +85,7 @@ describe 'packetbeat', 'type' => 'class' do
           it do
             is_expected.to contain_yumrepo('beats').with(
               'ensure' => 'present',
-              'baseurl' => 'https://artifacts.elastic.co/packages/6.x/yum',
+              'baseurl' => 'https://artifacts.elastic.co/packages/7.x/yum',
               'gpgkey' => 'https://artifacts.elastic.co/GPG-KEY-elasticsearch',
             )
           end
@@ -108,7 +101,7 @@ describe 'packetbeat', 'type' => 'class' do
               'gpgcheck' => 1,
               'name' => 'beats',
               'type' => 'yum',
-              'baseurl' => 'https://artifacts.elastic.co/packages/6.x/yum',
+              'baseurl' => 'https://artifacts.elastic.co/packages/7.x/yum',
               'gpgkey' => 'https://artifacts.elastic.co/GPG-KEY-elasticsearch',
             )
           end
@@ -120,7 +113,7 @@ describe 'packetbeat', 'type' => 'class' do
           it do
             is_expected.to contain_apt__source('beats').with(
               'ensure' => 'present',
-              'location' => 'https://artifacts.elastic.co/packages/6.x/apt',
+              'location' => 'https://artifacts.elastic.co/packages/7.x/apt',
               'release' => 'stable',
               'repos' => 'main',
               'key' => {
