@@ -2,7 +2,7 @@
   "name": "norisnetwork-packetbeat",
   "version": "0.2.0",
   "author": "norisnetwork",
-  "summary": "Module for installing, managing and cinfiguring the Packetbeat lightweight shipper for network data by elastic.",
+  "summary": "Module for installing, managing and configuring the Packetbeat lightweight shipper for network data by elastic.",
   "license": "Apache-2.0",
   "source": "https://github.com/noris-network/norisnetwork-packetbeat",
   "project_page": "https://github.com/noris-network/norisnetwork-packetbeat",
