@@ -1,6 +1,6 @@
 # norisnetwork-packetbeat
 
-[![Build Status](https://travis-ci.org/noris-network/norisnetwork-packetbeat.svg?branch=master)](https://travis-ci.org/noris-network/norisnetwork-packetbeat)
+![Travis (.org)](https://img.shields.io/travis/noris-network/norisnetwork-packetbeat) [![GitHub license](https://img.shields.io/github/license/noris-network/norisnetwork-packetbeat)](https://github.com/noris-network/norisnetwork-packetbeat/blob/master/LICENSE) ![GitHub repo size](https://img.shields.io/github/repo-size/noris-network/norisnetwork-packetbeat) ![Puppet Forge version](https://img.shields.io/puppetforge/v/norisnetwork/packetbeat) ![Puppet Forge – PDK version](https://img.shields.io/puppetforge/pdk-version/norisnetwork/packetbeat)
 
 ## Table of Contents
 
