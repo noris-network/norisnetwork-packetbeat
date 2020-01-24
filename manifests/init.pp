@@ -87,7 +87,7 @@ class packetbeat (
   Hash $outputs                                                                       = {},
   Enum['5', '6', '7'] $major_version                                                  = '7',
   Enum['present', 'absent'] $ensure                                                   = 'present',
-  Enum['systemd', 'init'] $service_provider                                           = undef,
+  Enum['systemd', 'init'] $service_provider                                           = 'systemd',
   Boolean $manage_repo                                                                = true,
   Optional[Variant[Stdlib::HTTPUrl, Stdlib::HTTPSUrl]] $apt_repo_url                  = undef,
   Optional[Variant[Stdlib::HTTPUrl, Stdlib::HTTPSUrl]] $yum_repo_url                  = undef,
