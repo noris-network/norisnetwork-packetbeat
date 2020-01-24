@@ -16,63 +16,31 @@ class packetbeat::config {
     }
   }
 
-  case $packetbeat::major_version {
-    '5': {
-      $packetbeat_config = delete_undef_values({
-        'name'                      => $packetbeat::beat_name ,
-        'fields_under_root'         => $packetbeat::fields_under_root,
-        'fields'                    => $packetbeat::fields,
-        'tags'                      => $packetbeat::tags,
-        'queue_size'                => $packetbeat::queue_size,
-        'logging'                   => $packetbeat::logging,
-        'output'                    => $packetbeat::outputs,
-        'processors'                => $packetbeat::processors,
-        'packetbeat'                => {
-          'flows'                     => $packetbeat::flows,
-          'protocols'                 => $packetbeat::protocols,
-          'procs'                     => $packetbeat::procs,
-          'interfaces'                => $interfaces_hash,
-        },
-      })
-      $validate_cmd_temp = "${packetbeat_bin} -N -configtest -c %"
-    }
-    default: {
-      $packetbeat_config_temp = delete_undef_values({
-        'name'                      => $packetbeat::beat_name ,
-        'fields_under_root'         => $packetbeat::fields_under_root,
-        'fields'                    => $packetbeat::fields,
-        'tags'                      => $packetbeat::tags,
-        'logging'                   => $packetbeat::logging,
-        'queue'                     => $packetbeat::queue,
-        'output'                    => $packetbeat::outputs,
-        'processors'                => $packetbeat::processors,
-        'packetbeat'                => {
-          'flows'                     => $packetbeat::flows,
-          'protocols'                 => $packetbeat::protocols,
-          'procs'                     => $packetbeat::procs,
-          'interfaces'                => $interfaces_hash,
-        },
-      })
-      $validate_cmd_temp = "${packetbeat_bin} test config -c %"
-      case $packetbeat::package_ensure {
-        'latest': { $packetbeat_config = deep_merge($packetbeat_config_temp, {'xpack' => $packetbeat::xpack}) }
-        /^\w+$/:  { $packetbeat_config = $packetbeat_config_temp }
-        default:  {
-          if versioncmp($packetbeat::package_ensure, '6.1.0') >= 0 {
-            $packetbeat_config = deep_merge($packetbeat_config_temp, {'xpack' => $packetbeat::xpack})
-          }
-          else {
-            $packetbeat_config = $packetbeat_config_temp
-          }
-        }
-      }
-    }
-  }
-
   $validate_cmd = $packetbeat::disable_configtest ? {
     true => undef,
-    default => $validate_cmd_temp,
+    default => "${packetbeat_bin} test config -c %",
   }
+
+
+  $packetbeat_config = delete_undef_values({
+    'name'                      => $packetbeat::beat_name ,
+    'fields_under_root'         => $packetbeat::fields_under_root,
+    'fields'                    => $packetbeat::fields,
+    'xpack'                     => $packetbeat::xpack,
+    'monitoring'                => $packetbeat::monitoring,
+    'tags'                      => $packetbeat::tags,
+    'queue'                     => $packetbeat::queue,
+    'logging'                   => $packetbeat::logging,
+    'output'                    => $packetbeat::outputs,
+    'processors'                => $packetbeat::processors,
+    'setup'                     => $packetbeat::setup,
+    'packetbeat'                => {
+      'flows'                     => $packetbeat::flows,
+      'protocols'                 => $packetbeat::protocols,
+      'procs'                     => $packetbeat::procs,
+      'interfaces'                => $interfaces_hash,
+    },
+  })
 
   file { '/etc/packetbeat/packetbeat.yml':
     ensure       => $packetbeat::ensure,
