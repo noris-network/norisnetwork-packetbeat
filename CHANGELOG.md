@@ -2,17 +2,28 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v0.2.3](https://github.com/noris-network/norisnetwork-packetbeat/tree/v0.2.3) (2020-02-10)
+
+[Full Changelog](https://github.com/noris-network/norisnetwork-packetbeat/compare/v0.2.1...v0.2.3)
+
+### Added
+
+ - Support version 7 syntax for $protocols
+
+### Fixed
+ - updated metadata.json (v0.2.3)
+
 ## [v0.2.1](https://github.com/noris-network/norisnetwork-packetbeat/tree/v0.2.1) (2020-01-24)
 
 [Full Changelog](https://github.com/noris-network/norisnetwork-packetbeat/compare/v0.2.0...v0.2.1)
 
-# Added
+### Added
 
 - added **monitoring** Hash for new elastic major version 7 and 8
 - added **$gpg_key_id** to repo.pp variables in case of elastic wants to change the gpg key some time
 - added **Puppet version 4 testing** since PDK does not test puppet 4
 
-# Fixed
+### Fixed
 
 - fixed typo in **metadata.json**
 - improved **dependencies versions** in metadata.json for stdlib and apt
