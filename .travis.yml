@@ -1,46 +1,49 @@
 ---
-sudo: false
-dist: trusty
+dist: xenial
 language: ruby
 cache: bundler
 before_install:
   - bundle -v
   - rm -f Gemfile.lock
-  - gem update --system
-  - gem update bundler
+  - gem update --system $RUBYGEMS_VERSION
   - gem --version
   - bundle -v
 script:
   - 'bundle exec rake $CHECK'
 bundler_args: --without system_tests
 rvm:
-  - 2.4.1
-env:
-  - PUPPET_GEM_VERSION="~> 5.0" CHECK=spec
+  - 2.5.3
+stages:
+  - static
+  - spec
+  - acceptance
+  -
+    if: tag =~ ^v\d
+    name: deploy
 matrix:
   fast_finish: true
   include:
     -
-      env: CHECK=rubocop
+      env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
+      stage: static
     -
-      env: CHECK="syntax lint"
+      env: PUPPET_GEM_VERSION="~> 4.0" CHECK=parallel_spec
+      rvm: 2.4.4
+      stage: spec
     -
-      env: CHECK=metadata_lint
+      env: PUPPET_GEM_VERSION="~> 5.0" CHECK=parallel_spec
+      rvm: 2.4.5
+      stage: spec
     -
-      env: CHECK=release_checks
+      env: PUPPET_GEM_VERSION="~> 6.0" CHECK=parallel_spec
+      rvm: 2.5.3
+      stage: spec
     -
-      env: CHECK=spec
-    -
-      env: PUPPET_GEM_VERSION="~> 4.0" CHECK=spec
-      rvm: 2.3.7
+      env: DEPLOY_TO_FORGE=yes
+      stage: deploy
 branches:
   only:
     - master
     - /^v\d/
 notifications:
   email: false
-deploy:
-  provider: puppetforge
-  user: norisnetwork
-  password:
-    secure: EBDp3lVMYELzu0+SfTPLX7AX2nHW5f9Urv1L6+34aUlfUONhJq3zuiWk1DZLPdPmDM8wlbhDzr4z9YtnBjH2nFzyq6VmKp0LA37tiLJcDIuRIe6Ci7QmH+j2xAaFPne5Doln2/a0I+PyVGGRp0XIQv1yHoGGT0YO8mOZblL3Z1CD9oRTHmXCv86nvr2mOC1vUGKGIjeKhMEql2Hn7IjTfmhRySAFKFNLd7u4UkCHBKqHxgvpiu2E72jO/jJhwbgPJEXYCncG6QSvqDy6hR0wIEm4A+tiGRc7UissjAfaltpoVdcs3AZanrTr7slKD+wM+qY9RlCsNWpAdqAU77xqQLWf9tj0gteBoIkL9D3TOarT1+2Q+f8RmOzPsv+EFq2+0JbVX12vl2gbfuIA3jGcs7Ll+U7RhgXrgz2zjp/fAx6DxO6F2sWluzxs0qjZN+lAZHLyfbniRNrbjr3R9IMsurzp1rh/Ih7mejfDb26NEg3vemjQf4PJWO3UuZc+tXeB1I001L1oddbFyozIQahlOJITGR9UCe7MEY94rcCRob4nr1V8cdEbtimP4wdVs7uinllRihr9lDpv+ytYQLGRUxMm8SLPiFgRa4HI2D6vel9dKqaunBPcRiKn9TZ12/L8nrxOFHNSJkwEuyquOMYTQrMnG6s9kor2CsruzykgIzU=
