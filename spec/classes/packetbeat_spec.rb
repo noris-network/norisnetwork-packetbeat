@@ -15,7 +15,7 @@ describe 'packetbeat', 'type' => 'class' do
 
         it do
           is_expected.to contain_package('packetbeat').with(
-            'ensure' => 'latest',
+            'ensure' => 'present',
           )
         end
       end
