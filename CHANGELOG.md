@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v0.2.4](https://github.com/noris-network/norisnetwork-packetbeat/tree/v0.2.4) (2020-09-15)
+
+[Full Changelog](https://github.com/noris-network/norisnetwork-packetbeat/compare/v0.2.3...v0.2.4)
+
+### Added
+
+ - add differentiation between **xpack** and **monitoring** since xpack is partially deprecated and will be removed soon, add xpack support only on versions 6.2.0 until < 7.2.0, after that use monitoring instead
+
+### Remove
+ - Puppet4 testing
+
 ## [v0.2.3](https://github.com/noris-network/norisnetwork-packetbeat/tree/v0.2.3) (2020-02-10)
 
 [Full Changelog](https://github.com/noris-network/norisnetwork-packetbeat/compare/v0.2.1...v0.2.3)
