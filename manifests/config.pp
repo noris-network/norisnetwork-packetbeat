@@ -21,13 +21,10 @@ class packetbeat::config {
     default => "${packetbeat_bin} test config -c %",
   }
 
-
   $packetbeat_config = delete_undef_values({
     'name'                      => $packetbeat::beat_name ,
     'fields_under_root'         => $packetbeat::fields_under_root,
     'fields'                    => $packetbeat::fields,
-    'xpack'                     => $packetbeat::xpack,
-    'monitoring'                => $packetbeat::monitoring,
     'tags'                      => $packetbeat::tags,
     'queue'                     => $packetbeat::queue,
     'logging'                   => $packetbeat::logging,
@@ -42,12 +39,27 @@ class packetbeat::config {
     },
   })
 
+  if ($packetbeat::xpack != undef) and ($packetbeat::monitoring != undef) {
+    fail('Setting both xpack and monitoring is not supported!')
+  }
+
+  # Add the 'xpack' section if supported (version >= 6.2.0)
+  if (versioncmp($facts['packetbeat_version'], '7.2.0') >= 0) and ($packetbeat::monitoring) {
+    $merged_config = deep_merge($packetbeat_config, {'monitoring' => $packetbeat::monitoring})
+  }
+  elsif (versioncmp($facts['packetbeat_version'], '6.2.0') >= 0) and ($packetbeat::xpack) {
+    $merged_config = deep_merge($packetbeat_config, {'xpack' => $packetbeat::xpack})
+  }
+  else {
+    $merged_config = $packetbeat_config
+  }
+
   file { '/etc/packetbeat/packetbeat.yml':
     ensure       => $packetbeat::ensure,
     owner        => 'root',
     group        => 'root',
     mode         => $packetbeat::config_file_mode,
-    content      => inline_template('<%= @packetbeat_config.to_yaml()  %>'),
+    content      => inline_template('<%= @merged_config.to_yaml()  %>'),
     validate_cmd => $validate_cmd,
   }
 }
