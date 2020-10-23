@@ -44,10 +44,10 @@ class packetbeat::config {
   }
 
   # Add the 'xpack' section if supported (version >= 6.2.0)
-  if ($facts['packetbeat_version'] == undef) or ((versioncmp($facts['packetbeat_version'], '7.2.0') >= 0) and ($packetbeat::monitoring)) {
+  if ((versioncmp($packetbeat::package_ensure, '7.2.0') >= 0) or $packetbeat::package_ensure == 'present') and ($packetbeat::monitoring) {
     $merged_config = deep_merge($packetbeat_config, {'monitoring' => $packetbeat::monitoring})
   }
-  elsif (versioncmp($facts['packetbeat_version'], '6.2.0') >= 0) and ($packetbeat::xpack) {
+  elsif (versioncmp($packetbeat::package_ensure, '6.2.0') >= 0) and ($packetbeat::xpack) {
     $merged_config = deep_merge($packetbeat_config, {'xpack' => $packetbeat::xpack})
   }
   else {
