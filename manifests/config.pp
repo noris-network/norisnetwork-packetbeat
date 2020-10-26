@@ -39,19 +39,27 @@ class packetbeat::config {
     },
   })
 
-  if ($packetbeat::xpack != undef) and ($packetbeat::monitoring != undef) {
-    fail('Setting both xpack and monitoring is not supported!')
-  }
-
-  # Add the 'xpack' section if supported (version >= 6.2.0)
-  if (versioncmp($facts['packetbeat_version'], '7.2.0') >= 0) and ($packetbeat::monitoring) {
-    $merged_config = deep_merge($packetbeat_config, {'monitoring' => $packetbeat::monitoring})
-  }
-  elsif (versioncmp($facts['packetbeat_version'], '6.2.0') >= 0) and ($packetbeat::xpack) {
-    $merged_config = deep_merge($packetbeat_config, {'xpack' => $packetbeat::xpack})
-  }
-  else {
-    $merged_config = $packetbeat_config
+  # Add 'monitoring' or 'xpack' section if supported (version >= 6.2.0)
+  if ($facts['packetbeat_version'] != undef) {
+    if (versioncmp($facts['packetbeat_version'], '7.2.0') >= 0) and ($packetbeat::monitoring) {
+      $merged_config = deep_merge($packetbeat_config, {'monitoring' => $packetbeat::monitoring})
+    }
+    elsif (versioncmp($facts['packetbeat_version'], '6.2.0') >= 0) and ($packetbeat::monitoring) {
+      $merged_config = deep_merge($packetbeat_config, {'xpack.monitoring' => $packetbeat::monitoring})
+    }
+    else {
+      $merged_config = $packetbeat_config
+    }
+  } else {
+    if ($packetbeat::major_version == '7' and (($packetbeat::package_ensure == 'present') or ($packetbeat::package_ensure == 'latest'))) {
+      $merged_config = deep_merge($packetbeat_config, {'monitoring' => $packetbeat::monitoring})
+    }
+    elsif ($packetbeat::major_version == '6' and (($packetbeat::package_ensure == 'present') or ($packetbeat::package_ensure == 'latest'))) {
+      $merged_config = deep_merge($packetbeat_config, {'xpack.monitoring' => $packetbeat::monitoring})
+    }
+    else {
+      $merged_config = $packetbeat_config
+    }
   }
 
   file { '/etc/packetbeat/packetbeat.yml':

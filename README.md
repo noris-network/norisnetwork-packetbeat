@@ -213,7 +213,6 @@ Installation and configuration.
 * `modules`: [Array[Hash]] the required [modules](https://www.elastic.co/guide/en/beats/packetbeat/current/packetbeat-modules.html) to load (default: undef).
 * `processors`: [Array[Hash]] the optional [processors](https://www.elastic.co/guide/en/beats/packetbeat/current/defining-processors.html) for event enhancement (default: undef).
 * `procs`: [Hash] the optional section to monitor the [process tracking](https://www.elastic.co/guide/en/beats/packetbeat/current/configuration-processes.html) (default: undef).
-* `xpack`: [Hash] the configuration of x-pack monitoring (default: undef).
 
 ### Private Classes
 

@@ -44,7 +44,7 @@
 # @param protocols the tansaction protocols to monitor.
 # @param processors the optional processors for events enhancement.
 # @param procs the optional section to monitor the process tracking.
-# @param xpack the configuration of x-pack monitoring.
+# @param monitoring adds internal monitoring. Works with both xpack.monitoring and monitoring.
 #
 class packetbeat (
   String $beat_name                                                   = $::hostname,
@@ -102,7 +102,6 @@ class packetbeat (
   Optional[Variant[Hash, Array, Tuple]] $protocols                                    = [],
   Optional[Array[Hash]] $processors                                                   = undef,
   Optional[Hash] $procs                                                               = undef,
-  Optional[Hash] $xpack                                                               = undef,
   Optional[Hash] $monitoring                                                          = undef,
   Optional[Hash] $setup                                                               = undef,
 ) {
