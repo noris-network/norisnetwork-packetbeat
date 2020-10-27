@@ -32,12 +32,12 @@ describe 'packetbeat', 'type' => 'class' do
           )
         end
       end
-      describe 'with version 7.5.1' do
-        let(:params) { { 'package_ensure' => '7.5.1' } }
+      describe 'with version 7.9.3' do
+        let(:params) { { 'package_ensure' => '7.9.3' } }
 
         it do
           is_expected.to contain_package('packetbeat').with(
-            'ensure' => '7.5.1',
+            'ensure' => '7.9.3',
           )
         end
       end
@@ -78,7 +78,7 @@ describe 'packetbeat', 'type' => 'class' do
         end
       end
       case os
-      when %r{centos-7-|redhat-7-}
+      when %r{centos-7-|redhat-7-|centos-8-|redhat-8-}
         describe 'with manage_repo true on RedHat family' do
           let(:params) { { 'ensure' => 'present', 'manage_repo' => true } }
 
@@ -106,7 +106,7 @@ describe 'packetbeat', 'type' => 'class' do
             )
           end
         end
-      when %r{debian-9-|ubuntu-16.04-}
+      when %r{debian-9-|ubuntu-16.04-|ubuntu-18.04-|ubuntu-20.04-}
         describe 'with manage_repo true on Debian family' do
           let(:params) { { 'ensure' => 'present', 'manage_repo' => true } }
 

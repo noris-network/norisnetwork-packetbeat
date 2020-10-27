@@ -1,6 +1,6 @@
 {
   "name": "norisnetwork-packetbeat",
-  "version": "0.2.4",
+  "version": "1.0.0",
   "author": "norisnetwork",
   "summary": "Module for installing, managing and configuring the Packetbeat lightweight shipper for network data by elastic.",
   "license": "Apache-2.0",
@@ -29,13 +29,15 @@
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "7"
+        "7",
+        "8"
       ]
     },
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "7"
+        "7",
+        "8"
       ]
     },
     {
@@ -47,6 +49,7 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
+        "16.04",
         "18.04"
       ]
     },
@@ -70,6 +73,7 @@
     "elastic",
     "norisnetwork",
     "logstash",
+    "observability"
     "kibana"
   ],
   "pdk-version": "1.18.1",
