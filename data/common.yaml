@@ -1,1 +1,29 @@
 ---
+lookup_options:
+  packetbeat::flows:
+    merge:
+      strategy: deep
+  packetbeat::interfaces:
+    merge:
+      strategy: deep
+  packetbeat::logging:
+    merge:
+      strategy: deep
+  packetbeat::queue:
+    merge:
+      strategy: deep
+  packetbeat::processors:
+    merge:
+      strategy: deep
+  packetbeat::tags:
+    merge:
+      strategy: deep
+  packetbeat::fields:
+    merge:
+      strategy: deep
+  packetbeat::procs:
+    merge:
+      strategy: deep
+  packetbeat::setup:
+    merge:
+      strategy: deep
