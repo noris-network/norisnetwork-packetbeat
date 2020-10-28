@@ -73,7 +73,7 @@
     "elastic",
     "norisnetwork",
     "logstash",
-    "observability"
+    "observability",
     "kibana"
   ],
   "pdk-version": "1.18.1",
