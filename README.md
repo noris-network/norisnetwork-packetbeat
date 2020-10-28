@@ -17,7 +17,7 @@
 ## Description
 
 This is a Puppet module for installing, managing and configuring the [Packetbeat lightweight shipper](https://www.elastic.co/guide/en/beats/packetbeat/current/packetbeat-overview.html) for network data by elastic.
-It has been tested on Puppet 5.x and on the following OSes: Debian 9.1, CentOS 7.3, Ubuntu 16.04
+It has been tested on Puppet 5.x and on the following OSes: Debian 9.1, CentOS 7.3,CentOS 8.2,Ubuntu 16.04,Ubuntu 18.04,
 
 ## Setup
 
@@ -238,7 +238,7 @@ It defines the default values of some parameters.
 
 ## Limitations
 
-This module does not load the index template in Elasticsearch nor the packetbeat example dashboards in Kibana. These two tasks should be carried out manually. Please follow the documentation to [manually load the index template in Elasticsearch](https://www.elastic.co/guide/en/beats/packetbeat/current/packetbeat-template.html#load-template-manually-alternate) and to [import the packetbeat dashboards in Kibana](https://www.elastic.co/guide/en/beats/devguide/6.2/import-dashboards.html).
+This module does not load the index template in Elasticsearch nor the packetbeat example dashboards in Kibana. These two tasks should be carried out manually. Please follow the documentation to [manually load the index template in Elasticsearch](https://www.elastic.co/guide/en/beats/packetbeat/current/packetbeat-template.html#load-template-manually-alternate) and to [import the packetbeat dashboards in Kibana](https://www.elastic.co/guide/en/beats/devguide/current/import-dashboards.html).
 
 The option `manage_repo` does not remove the repo repo file, even if set to *false*. Please delete it manually.
 
