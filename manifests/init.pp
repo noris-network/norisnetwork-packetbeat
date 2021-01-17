@@ -105,7 +105,7 @@ class packetbeat (
   Optional[Hash] $procs                                                               = undef,
   Optional[Hash] $monitoring                                                          = undef,
   Optional[Hash] $setup                                                               = undef,
-  Optional[Integer] max_procs                                                         = undef
+  Optional[Integer] $max_procs                                                        = undef
 ) {
 
   contain packetbeat::repo
