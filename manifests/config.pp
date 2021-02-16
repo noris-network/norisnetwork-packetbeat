@@ -31,6 +31,7 @@ class packetbeat::config {
     'output'                    => $packetbeat::outputs,
     'processors'                => $packetbeat::processors,
     'setup'                     => $packetbeat::setup,
+    'max_procs'                 => $packetbeat::max_procs,
     'packetbeat'                => {
       'flows'                     => $packetbeat::flows,
       'protocols'                 => $packetbeat::protocols,

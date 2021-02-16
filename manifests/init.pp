@@ -45,6 +45,7 @@
 # @param processors the optional processors for events enhancement.
 # @param procs the optional section to monitor the process tracking.
 # @param monitoring adds internal monitoring. Works with both xpack.monitoring and monitoring.
+# @param max_procs limit the amount of CPU resources packetbeat uses to this many CPU cores
 #
 class packetbeat (
   String $beat_name                                                   = $::hostname,
@@ -104,6 +105,7 @@ class packetbeat (
   Optional[Hash] $procs                                                               = undef,
   Optional[Hash] $monitoring                                                          = undef,
   Optional[Hash] $setup                                                               = undef,
+  Optional[Integer] $max_procs                                                        = undef
 ) {
 
   contain packetbeat::repo
